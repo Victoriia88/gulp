@@ -1,15 +1,21 @@
 const car = { brand: "", model: "", color: "" };
 const updatedProperties = { type: "" };
 
-const electro = Object.assign({}, car, updatedProperties, {
+Object.assign(car, updatedProperties);
+
+const electro = {
+  ...car,
   type: "electro",
   maxDistance: 0,
-});
-const common = Object.assign({}, car, updatedProperties, {
+};
+
+const common = {
+  ...car,
   type: "common",
   gas: "",
   gearBox: "",
-});
+};
+
 const models = {
   tesla: { ...electro, brand: "Tesla", model: "S Plaid", maxDistance: 850 },
   leaf: { ...electro, brand: "Nissan", model: "Leaf", maxDistance: 270 },
@@ -24,12 +30,14 @@ const models = {
 };
 
 for (const modelName in models) {
-  console.log(`${modelName}:`);
   const modelData = models[modelName];
-  if (modelData.type === "electro" || modelData.type === "common") {
-    Object.entries(modelData).forEach(([key, value]) => {
-      console.log(`${key}: ${value}`);
-    });
-    console.log("");
-  }
+  console.log(`${modelName}:`);
+
+  const infoLines = [];
+  Object.entries(modelData).forEach(([key, value]) => {
+    infoLines.push(`${key}: "${value}"`);
+  });
+
+  console.log(infoLines.join(", "));
+  console.log("");
 }
